@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, flash, render_template, request, redirect, url_for
 from markupsafe import escape
 import datetime
 import requests
@@ -31,14 +31,19 @@ def index():
 def messages():
     if request.method == 'POST':
         message = request.form['message']
-        timestamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        store['recibidos'].append((store['usuario'], store['destinatario'], message, timestamp))
-        try:
-            response = requests.post('http://127.0.0.1:5001/enviar', json={'usuario':store['usuario'],'destinatario':store['destinatario'],'message': message, 'timestamp': timestamp})
-            logger.info('Mensaje enviado')
-        except Exception as e:
-            logger.warning(e)
-            logger.warning('No se logró enviar mensaje')
+        if len(message) < 1:
+            logger.warning('Mensaje vacío no permitido')
+        elif len(message) > 350:
+            logger.warning('Mensaje excede el límite de caracteres permitidos (350)')
+        else:
+            timestamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            store['recibidos'].append((store['usuario'], store['destinatario'], message, timestamp))
+            try:
+                response = requests.post('http://127.0.0.1:5001/enviar', json={'usuario':store['usuario'],'destinatario':store['destinatario'],'message': message, 'timestamp': timestamp})
+                logger.info('Mensaje enviado')
+            except Exception as e:
+                logger.warning(e)
+                logger.warning('No se logró enviar mensaje')
     return render_template('index.html', store= store) 
 
 
