@@ -10,19 +10,16 @@ Clona el repositorio de forma local
 git clone https://github.com/validacion-y-verificacion/validacion-y-verificacion.git
 ```
 
-Luego, instala las dependencias necesarias en la app1 y app2
+Luego, instala las dependencias necesarias
 
 ``` 
 cd validacion-y-verificacion/app1
-pip install -r requirements.txt
-
-cd validacion-y-verificacion/app2
 pip install -r requirements.txt
 ```
 
 ## Cómo usar
 
-Para inicializar la primera máquina, dentro de la carpeta app 1 ejecutar
+Para inicializar la primera máquina, dentro de la carpeta app1 ejecutar
 ``` 
 python server.py
 ```
