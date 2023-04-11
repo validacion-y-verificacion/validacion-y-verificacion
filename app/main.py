@@ -30,21 +30,8 @@ def index():
         if store['usuario'] == '' or store['destinatario'] == '':
             logger.warning('Usuario o destinatario vacío')
             return render_template('user.html')
-        
-        # Verifica que exista el destinatario    
-        try:
-            response = requests.post('http://127.0.0.1:5001/check')
-            if response.status_code == 200:
-                logger.info('Handshake')
-                if response.text != store['destinatario']:
-                    logger.warning('No se encontró destinatario')
-                    return render_template('user.html') 
-                logger.info('Usuario ingresado')
-                logger.info('Destinatario ingresado')
-        except Exception as e:
-            logger.warning(e)
-            logger.warning('No se logró enviar handshake')
-            return render_template('user.html')
+        logger.info('Usuario ingresado')
+        logger.info('Destinatario ingresado')
         
         return redirect(url_for('messages'))
     return render_template('user.html')
