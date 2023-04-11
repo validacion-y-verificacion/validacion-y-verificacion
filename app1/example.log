@@ -1,0 +1,12 @@
+INFO:root:Handshake recibido
+INFO:werkzeug:127.0.0.1 - - [10/Apr/2023 23:54:12] "POST /check HTTP/1.1" 200 -
+INFO:root:Mensaje recibido
+INFO:werkzeug:127.0.0.1 - - [10/Apr/2023 23:54:12] "POST /enviar HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [10/Apr/2023 23:54:17] "GET / HTTP/1.1" 200 -
+INFO:root:Usuario ingresado
+INFO:root:Destinatario ingresado
+INFO:werkzeug:127.0.0.1 - - [10/Apr/2023 23:54:19] "[32mPOST / HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [10/Apr/2023 23:54:19] "GET /messages HTTP/1.1" 200 -
+INFO:root:Handshake
+INFO:root:Mensaje enviado
+INFO:werkzeug:127.0.0.1 - - [10/Apr/2023 23:54:23] "POST /messages HTTP/1.1" 200 -

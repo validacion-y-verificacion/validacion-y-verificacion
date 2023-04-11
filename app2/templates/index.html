@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Mensajes</title>
+</head>
+<body>
+
+<hr>
+  
+
+<div style="width: 50%; margin: 0 auto; border: 1px solid #DBDBDB; border-radius: 4px; overflow: auto;">
+    <header style="background-color: #ACD2FF; border: 1px solid #ACD2FF; border-radius: 2px; height: 40px ;margin-bottom: 20px;"></header>
+    <h1 style="padding-left: 20px; font-weight: 600; font-size: 30px;">Chat entre {{store['usuario']}} y {{store['destinatario']}}</h1>
+    <ul style="list-style-type: none;">
+        {% for mes in store['recibidos'] %}
+            {% if store['usuario'] in mes and store['destinatario'] in mes %}
+            <li>
+                <div style="padding: 10px; border-bottom: 1px solid #DBDBDB">
+                <div style="float: left; font-weight: 700;">{{ mes[0]}}</div>
+                <div style="color:gray; float: right;">{{ mes[3] }}</div>
+                <br>
+                <p style="word-wrap: break-word;">{{ mes[2] }}</p>
+                </div>
+            </li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+
+    <form method="post">
+        <input style=" height: 100px; width: 400px; margin-bottom: 20px;box-sizing: border-box; margin-left: 40px; flex: 1;" type="text" id="message" name="message" maxlength="349" required>
+        <br>
+        <button style="margin-left: 40px; margin-bottom: 20px; box-sizing: border-box;" type="submit" name="submit" value="send" class="btn btn-primary">Enviar</button>
+    </form>
+</div>
+
+</body>
+</html> 
