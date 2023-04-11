@@ -21,12 +21,12 @@ pip install -r requirements.txt
 
 Para inicializar la primera máquina, dentro de la carpeta app1 ejecutar
 ``` 
-python server.py
+python main.py
 ```
 
 Para inicializar la segunda máquina, dentro de la carpeta app2 ejecutar
 ``` 
-python server.py
+python main.py
 ```
 
 Luego, puedes acceder a ambas aplicaciones desde tu navegador
