@@ -3,12 +3,20 @@ from markupsafe import escape
 import datetime
 import requests
 import logging
-
+from cryptography.fernet import Fernet
+import base64
 
 logging.basicConfig(filename='example.log', encoding='utf-8', level=logging.INFO) 
 logger=logging.getLogger()
 
 app = Flask(__name__)
+
+# Lee la key
+with open('secret.key', 'rb') as f:
+    encoded_key = f.read()
+
+key = base64.urlsafe_b64decode(encoded_key)
+fernet = Fernet(key)
 
 global store
 store = {'usuario': '', 'destinatario': '', 'recibidos': []}
@@ -55,9 +63,12 @@ def messages():
                 logger.warning(e)
                 logger.warning('No se logró enviar handshake')
 
+            # Se encripta el mensaje
+            message_encrypted = fernet.encrypt(message.encode())
+
             # Se envia el mensaje
             try:
-                response = requests.post('http://127.0.0.1:5001/enviar', json={'usuario':store['usuario'],'destinatario':store['destinatario'],'message': message, 'timestamp': timestamp})
+                response = requests.post('http://127.0.0.1:5002/enviar', json={'usuario':store['usuario'],'destinatario':store['destinatario'],'message': message_encrypted, 'timestamp': timestamp})
                 if response.status_code == 200:
                     store['recibidos'].append((store['usuario'], store['destinatario'], message, timestamp))
                     logger.info('Mensaje enviado')
@@ -73,10 +84,21 @@ def messages():
 def enviar():
     logger.info('Mensaje recibido')
     message = request.json['message']
+    
+    # Leemos la key
+    with open('secret.key', 'rb') as f:
+        encoded_key = f.read()
+
+    key = base64.urlsafe_b64decode(encoded_key)
+    fernet = Fernet(key)
+
+    # Se desencripta el mensaje
+    message_decrypted = fernet.decrypt(message.encode()).decode()
+
     usuario = request.json['usuario']
     destinatario = request.json['destinatario']
     timestamp = request.json['timestamp']
-    store['recibidos'].append(( usuario, destinatario, message, timestamp))
+    store['recibidos'].append(( usuario, destinatario, message_decrypted, timestamp))
     return destinatario
 
 
