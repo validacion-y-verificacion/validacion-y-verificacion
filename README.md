@@ -31,6 +31,11 @@ python main.py
 
 Luego, puedes acceder a ambas aplicaciones desde tu navegador
 
+Las máquinas corren en:
+
+- http://127.0.0.1:5002/
+- http://127.0.0.1:5001/
+
 ## Cómo contribuir 
 
 ### Issues
