@@ -53,11 +53,6 @@ def index():
 def messages():
     if request.method == 'POST':
         message = request.form['message']
-        try:
-            message.encode('utf-8')
-        except UnicodeError:
-            logger.warning('Mensaje no ASCII')
-            return render_template('index.html', store= store)
 
         if len(message) < 1:
             logger.warning('Mensaje vacío no permitido')
